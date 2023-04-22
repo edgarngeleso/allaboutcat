@@ -239,7 +239,7 @@ app.get("/feeding-time-hours/:catID",async(req,res)=>{
     return res.json({feedingTimeHours});
 })
 
-app.get("/edit-feeding-time",multer.any(),async(req,res)=>{
+app.post("/edit-feeding-time",multer.any(),async(req,res)=>{
     const feedingTimeID = req.body.feedingTimeID;
     const feedingTime = req.body.feedingTime;
     if(await updateFeedingTimeHours(feedingTime,feedingTimeID)){
