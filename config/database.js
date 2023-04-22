@@ -77,7 +77,8 @@ const createHygieneTable = (db)=>{
         hygieneID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         catID INTEGER NOT NULL,
         activity VARCHAR(1000) NOT NULL,
-        time VARCHAR(100) NOT NULL
+        time VARCHAR(100) NOT NULL,
+        date VARCHAR(100) NOT NULL,
     );
     `);
 }
@@ -88,7 +89,8 @@ const createFoodTable = (db)=>{
         foodID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         catID INTEGER NOT NULL,
         activity VARCHAR(100) NOT NULL,
-        time VARCHAR(100) NOT NULL
+        time VARCHAR(100) NOT NULL,
+        date VARCHAR(100) NOT NULL,
     );
     `);
 }
@@ -100,7 +102,8 @@ const createActivitiesTable = (db)=>{
         catID INTEGER NOT NULL,
         activity VARCHAR(100) NOT NULL,
         time VARCHAR(100) NOT NULL,
-        activityEndTime VARCHAR(100)
+        activityEndTime VARCHAR(100),
+        date VARCHAR(100) NOT NULL,
     );
     `);
 }
@@ -111,7 +114,8 @@ const createExpensesTable = (db)=>{
         expenseID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         catID INTEGER NOT NULL,
         activity VARCHAR(100) NOT NULL,
-        cost VARCHAR(100) NOT NULL
+        cost VARCHAR(100) NOT NULL,
+        date VARCHAR(100) NOT NULL,
     );
     `);
 }
@@ -122,7 +126,8 @@ const createVaccinesTable = (db)=>{
         vaccineID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         catID INTEGER NOT NULL,
         activity VARCHAR(100) NOT NULL,
-        time VARCHAR(100) NOT NULL
+        time VARCHAR(100) NOT NULL,
+        date VARCHAR(100) NOT NULL,
     );
     `);
 }

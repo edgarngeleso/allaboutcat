@@ -140,6 +140,17 @@ const getActivities = (catID)=>{
     })
 }
 
+const getFeedingTimeHours = (catID)=>{
+    return new Promise((resolve,reject)=>{
+        database.all(`SELECT * FROM feedingTime WHERE catID=?`,[catID],(err,row)=>{
+            if(err){
+                throw new Error(err);
+            }
+            return resolve(row);
+        })
+    })
+}
+
 
 module.exports = {
     getActivities,
@@ -153,4 +164,5 @@ module.exports = {
     getUsers,
     getUserWithCat,
     getUserCat,
+    getFeedingTimeHours
 }

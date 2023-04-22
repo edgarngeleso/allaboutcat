@@ -4,9 +4,9 @@ const cors = require("cors");
 const multer = require("multer")();
 
 const {databaseConnection} = require("./config/database");
-const { loginUser, getUser, getUsers, getCat, getHygiene, getActivities, getExpenses, getFoods, getVaccines, getUserWithCat } = require("./queries/GetQueries");
-const { addUser, addCat, addHygiene, addActivity, addExpense, addVaccine, addFood } = require("./queries/InsertQueries");
-const { updatePassword,updateCat } = require("./queries/UpdateQueries");
+const { loginUser, getUser, getUsers, getCat, getHygiene, getActivities, getExpenses, getFoods, getVaccines, getUserWithCat, getFeedingTimeHours } = require("./queries/GetQueries");
+const { addUser, addCat, addHygiene, addActivity, addExpense, addVaccine, addFood, addFeedingTime } = require("./queries/InsertQueries");
+const { updatePassword,updateCat, updateFeedingTimeHours } = require("./queries/UpdateQueries");
 const { getUserCat } = require("./queries/GetQueries");
 const db = databaseConnection("allaboutcats.db");
 
@@ -122,31 +122,31 @@ app.get("/categories/:catID",async (req,res)=>{
             categoryName:"Expenses",
             items:await getExpenses(req.params.catID),
             url:"expenses",
-            imageUrl:"http://10.0.2.2:8080/images/money.png",
+            imageUrl:"http://13.58.161.180:8080/images/money.png",
         },
         {
             categoryName:"Hygiene and care",
             items:await getHygiene(req.params.catID),
             url:"hygiene",
-            imageUrl:"http://10.0.2.2:8080/images/hygiene.png",
+            imageUrl:"http://13.58.161.180:8080/images/hygiene.png",
         },
         {
             categoryName:"Food",
             items:await getFoods(req.params.catID),
             url:"food",
-            imageUrl:"http://10.0.2.2:8080/images/food.png",
+            imageUrl:"http://13.58.161.180:8080/images/food.png",
         },
         {
             categoryName:"Activities",
             items:await getActivities(req.params.catID),
             url:"activities",
-            imageUrl:"http://10.0.2.2:8080/images/dumbell.png",
+            imageUrl:"http://13.58.161.180:8080/images/dumbell.png",
         },
         {
             categoryName:"Vaccine",
             items:await getVaccines(req.params.catID),
             url:"vaccine",
-            imageUrl:"http://10.0.2.2:8080/images/syringe.png",
+            imageUrl:"http://13.58.161.180:8080/images/syringe.png",
         },
     ];
     return res.json({categoryData});
@@ -208,8 +208,8 @@ app.post("/food",multer.any(),async(req,res)=>{
 })
 
 app.get("/foods/:catID",async (req,res)=>{
-    const expenses = await getExpenses(req.params.catID);
-    return res.json({expenses});
+    const foods = await getFoods(req.params.catID);
+    return res.json({foods});
 })
 
 //vaccine
@@ -225,14 +225,33 @@ app.get("/vaccines/:catID",async (req,res)=>{
     return res.json({vaccines});
 })
 
+//feeding time
+app.post("/add-feeding-time",multer.any(),async(req,res)=>{
+    if(await addFeedingTime(req.body.catID,req.body.feedingTime)){
+        return res.json({error:false,message:"Success."});
+    }
+    return res.json({error:true,message:"Error."});
+})
 
+app.get("/feeding-time-hours/:catID",async(req,res)=>{
+    const catID = req.params.catID;
+    const feedingTimeHours = await getFeedingTimeHours(catID);
+    return res.json({feedingTimeHours});
+})
 
+app.get("/edit-feeding-time",multer.any(),async(req,res)=>{
+    const feedingTimeID = req.body.feedingTimeID;
+    const feedingTime = req.body.feedingTime;
+    if(await updateFeedingTimeHours(feedingTime,feedingTimeID)){
+        return res.json({error:false,message:"Success."});
+    }
+    return res.json({error:true,message:"Error."});
+})
 
 app.listen(8080,(err)=>{
     if(err)throw new Error(err);
     console.log("Server running on port 8080");
 })
-
 
 /*
 fs.open("hello.html","w",(err,file)=>{

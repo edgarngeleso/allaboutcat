@@ -27,7 +27,22 @@ const updateCat = (catName,catBirthday,catGender,catID) =>{
    
 }
 
+const updateFeedingTimeHours = (feedingTime,feedingTimeID) =>{
+    return new Promise((resolve,reject)=>{
+    database.run(`UPDATE feedingTime 
+                    SET feedingTime=? 
+                    WHERE feedingTimeID=?`,[feedingTime,feedingTimeID],(err)=>{
+                    if(err){
+                        return resolve(false);
+                    }
+                    return resolve(true);
+                })
+    })
+   
+}
+
 module.exports = {
     updateCat,
-    updatePassword
+    updatePassword,
+    updateFeedingTimeHours
 }

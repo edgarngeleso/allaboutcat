@@ -37,8 +37,8 @@ const addCat = (cat) =>{
 const addFood = (catID,foodName,foodTime) =>{
     return new Promise((resolve,reject)=>{
         database.run(`INSERT 
-                    INTO food(catID,activity,time) 
-                    VALUES(?,?,?)`,[catID,foodName,foodTime],(err)=>{
+                    INTO food(catID,activity,time,date) 
+                    VALUES(?,?,?,?)`,[catID,foodName,foodTime,(new Date(Date.now()).toString())],(err)=>{
                         if(err){
                             return resolve(false);
                         }
@@ -50,8 +50,8 @@ const addFood = (catID,foodName,foodTime) =>{
 const addActivity = (catID,activityName,activityStartTime,activityEndTime) =>{
     return new Promise((resolve,reject)=>{
     database.run(`INSERT 
-                INTO activities(catID,activity,time,activityEndTime) 
-                VALUES(?,?,?,?)`,[catID,activityName,activityStartTime,activityEndTime],(err)=>{
+                INTO activities(catID,activity,time,activityEndTime,date) 
+                VALUES(?,?,?,?,?)`,[catID,activityName,activityStartTime,activityEndTime,(new Date(Date.now()).toString())],(err)=>{
                     if(err){
                         return resolve(false);
                     }
@@ -63,8 +63,8 @@ const addActivity = (catID,activityName,activityStartTime,activityEndTime) =>{
 const addVaccine = (catID,vaccineName,vaccineDate) =>{
     return new Promise((resolve,reject)=>{
     database.run(`INSERT 
-                INTO vaccines(catID,activity,time) 
-                VALUES(?,?,?)`,[catID,vaccineName,vaccineDate],(err)=>{
+                INTO vaccines(catID,activity,time,date) 
+                VALUES(?,?,?,?)`,[catID,vaccineName,vaccineDate,(new Date(Date.now()).toString())],(err)=>{
                     if(err){
                         console.log(err)
                         return resolve(false);
@@ -77,8 +77,8 @@ const addVaccine = (catID,vaccineName,vaccineDate) =>{
 const addHygiene = (catID,hygieneNote,hygieneDate) =>{
     return new Promise((resolve,reject)=>{
     database.run(`INSERT 
-                INTO hygiene(catID,activity,time) 
-                VALUES(?,?,?)`,[catID,hygieneNote,hygieneDate],(err)=>{
+                INTO hygiene(catID,activity,time,date) 
+                VALUES(?,?,?,?)`,[catID,hygieneNote,hygieneDate,(new Date(Date.now()).toString())],(err)=>{
                     if(err){
                         return resolve(false);
                     }
@@ -90,8 +90,8 @@ const addHygiene = (catID,hygieneNote,hygieneDate) =>{
 const addExpense = (catID,expenseName,expenseCost) =>{
     return new Promise((resolve,reject)=>{
     database.run(`INSERT 
-                INTO expenses(catID,activity,cost) 
-                VALUES(?,?,?)`,[catID,expenseName,expenseCost],(err)=>{
+                INTO expenses(catID,activity,cost,date) 
+                VALUES(?,?,?,?)`,[catID,expenseName,expenseCost,(new Date(Date.now()).toString())],(err)=>{
                     if(err){
                         return resolve(false);
                     }
@@ -121,6 +121,7 @@ module.exports = {
     addUser,
     addVaccine,
     addFood,
+    addFeedingTime
 }
 
 /*mydatabase.run("UPDATE users SET city=? WHERE userID=?",["Nairobi",1],(err)=>{
