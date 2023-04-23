@@ -8,6 +8,8 @@ const { loginUser, getUser, getUsers, getCat, getHygiene, getActivities, getExpe
 const { addUser, addCat, addHygiene, addActivity, addExpense, addVaccine, addFood, addFeedingTime } = require("./queries/InsertQueries");
 const { updatePassword,updateCat, updateFeedingTimeHours } = require("./queries/UpdateQueries");
 const { getUserCat } = require("./queries/GetQueries");
+const { passwordGenerator } = require("./functions/passwordGenerator");
+const { mail, sendEmail } = require("./functions/mail");
 const db = databaseConnection("allaboutcats.db");
 
 
@@ -51,7 +53,14 @@ app.post("/register",multer.any(),async (req,res)=>{
                     req.body.zipCode,
                     req.body.password
                     ];
+        if(req.body.email == ""){
+            return res.json({error:true,message:"Email is required."});
+        }
+        if(req.body.password == ""){
+            return res.json({error:true,message:"Password is required."});
+        }
 
+        
         const a = await addUser(user);
         console.log(user)
         if(await addUser(user)){
@@ -257,6 +266,27 @@ app.post("/edit-feeding-time",multer.any(),async(req,res)=>{
         return res.json({error:false,message:"Success."});
     }
     return res.json({error:true,message:"Error."});
+})
+
+//forgot password
+app.post("/forgot-password",multer.any(),async(req,res)=>{
+    let email = req.body.email;
+    let user = await getUserByEmail(email);
+    if(!(user)){
+        return res.json({error:true,message:`${email} was not found in our records!`});
+    }
+    // generate and send new password to user email
+    let newPassword = passwordGenerator();
+    sendEmail(email,user.firstName,newPassword);
+    if(mail(email)){
+        if(await updatePassword(user.userID,newPassword)){
+            return res.json({error:false,message:`Check ${email} for your password reset.`});
+        }else{
+            return res.json({error:true,message:`An error occurred, try again later.`});
+        }
+    }
+    return res.json({error:true,message:`An error occurred, try again later.`});
+
 })
 
 app.listen(8080,(err)=>{

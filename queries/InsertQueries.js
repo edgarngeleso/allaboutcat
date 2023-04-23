@@ -2,15 +2,13 @@ const {databaseConnection} = require("../config/database");
 
 const database = databaseConnection("allaboutcats.db");
 
-const user = ["Edgar","Ngeleso","edgarngereso@gmail.com","0712345678","Here","OOH","Here","Here","01234","1234"];
-
 const addUser = (user) =>{
     return new Promise((resolve,reject)=>{
+        //const user = ["Edgar","Ngeleso","user@gmail.com","0712345678","Here","OOH","Here","Here","01234","1234"];
         database.run(`INSERT 
                 INTO users(firtsName,lastName,email,phoneNumber,address,aptNumber,city,state,zipCode,password) 
                 VALUES(?,?,?,?,?,?,?,?,?,?)`,user,(err)=>{
                     if(err){
-                        console.log(err)
                         return resolve(false);
                     }
 
