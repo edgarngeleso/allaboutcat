@@ -2,7 +2,7 @@
     let formData = new FormData();
     formData.append("email","ngelesoedgar@gmail.com");
 
-    fetch("http://127.0.0.1:8080/forgot-password",{
+    fetch("http://13.58.161.180:8080/forgot-password",{
         method:"POST",
         body:formData,
     }).then(req=>req.json()).then(data=>{
