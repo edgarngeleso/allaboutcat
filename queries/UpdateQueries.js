@@ -13,11 +13,11 @@ const updatePassword = (userID,newPassword) =>{
             })
 }
 
-const updateCat = (catName,catBirthday,catGender,catID) =>{
+const updateCat = (catName,catBirthday,catGender,catColor,catEyeballColor,catIdentification,catID) =>{
     return new Promise((resolve,reject)=>{
     database.run(`UPDATE cats 
-                    SET catName=?,catBirthday=?,catGender=? 
-                    WHERE catID=?`,[catName,catBirthday,catGender,catID],(err)=>{
+                    SET catName=?,catBirthday=?,catGender=?,catColor=?,catEyeballColor=?,catIdentification=?
+                    WHERE catID=?`,[catName,catBirthday,catGender,catColor,catEyeballColor,catIdentification,catID],(err)=>{
                     if(err){
                         return resolve(false);
                     }

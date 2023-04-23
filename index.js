@@ -4,7 +4,7 @@ const cors = require("cors");
 const multer = require("multer")();
 
 const {databaseConnection} = require("./config/database");
-const { loginUser, getUser, getUsers, getCat, getHygiene, getActivities, getExpenses, getFoods, getVaccines, getUserWithCat, getFeedingTimeHours } = require("./queries/GetQueries");
+const { loginUser, getUser, getUsers, getCat, getHygiene, getActivities, getExpenses, getFoods, getVaccines, getUserWithCat, getFeedingTimeHours, getUserByEmail } = require("./queries/GetQueries");
 const { addUser, addCat, addHygiene, addActivity, addExpense, addVaccine, addFood, addFeedingTime } = require("./queries/InsertQueries");
 const { updatePassword,updateCat, updateFeedingTimeHours } = require("./queries/UpdateQueries");
 const { getUserCat } = require("./queries/GetQueries");
@@ -39,25 +39,30 @@ app.post("/login",multer.any(),async(req,res)=>{
 
 app.post("/register",multer.any(),async (req,res)=>{
     console.log(req.body);
-    let user = [req.body.firstName,
-                req.body.lastName,
-                req.body.email,
-                req.body.phoneNumber,
-                req.body.address,
-                req.body.aptNumber,
-                req.body.city,
-                req.body.state,
-                req.body.zipCode,
-                req.body.password
-                ];
+    if(!(await getUserByEmail(req.body.email))){
+        let user = [req.body.firstName,
+                    req.body.lastName,
+                    req.body.email,
+                    req.body.phoneNumber,
+                    req.body.address,
+                    req.body.aptNumber,
+                    req.body.city,
+                    req.body.state,
+                    req.body.zipCode,
+                    req.body.password
+                    ];
 
-    const a = await addUser(user);
-    console.log(user)
-    if(await addUser(user)){
-        
-        return res.json({error:false,message:"Success."});
+        const a = await addUser(user);
+        console.log(user)
+        if(await addUser(user)){
+            
+            return res.json({error:false,message:"Success."});
+        }
+        return res.json({error:true,message:"Unable to add user."});
+    }else{
+        return res.json({error:true,message:"Email exists. Choose another email or login."});
     }
-    return res.json({error:true,message:"Unable to add user."});
+    
 });
 
 app.get("/user/:id",async (req,res)=>{
@@ -79,6 +84,9 @@ app.post("/add-cat",multer.any(),async (req,res)=>{
         req.body.catName,
         req.body.catBirthday,
         req.body.catGender,
+        req.body.catColor,
+        req.body.catEyeballColor,
+        req.body.catIdentification,
         req.body.catAmountOfWater
     ]
     console.log(cat);
@@ -109,6 +117,9 @@ app.post("/edit-cat",multer.any(),async (req,res)=>{
     if(await updateCat(req.body.catName,
                         req.body.catBirthday,
                         req.body.catGender,
+                        req.body.catColor,
+                        req.body.catEyeballColor,
+                        req.body.catIdentification,
                         req.body.catID)){
         return res.json({error:false,message:"Success."});
     }

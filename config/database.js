@@ -47,6 +47,9 @@ const createCatsTable = (db)=>{
         catName VARCHAR(100) NOT NULL,
         catBirthday VARCHAR(100) NOT NULL,
         catGender VARCHAR(100) NOT NULL, 
+        catColor VARCHAR(100) NOT NULL, 
+        catEyeballColor VARCHAR(100) NOT NULL, 
+        catIdentification VARCHAR(100) NOT NULL, 
         catAmountOfWater VARCHAR(100) NOT NULL 
     );
     `);

@@ -24,8 +24,8 @@ const addUser = (user) =>{
 const addCat = (cat) =>{
     return new Promise((resolve,reject)=>{
         database.run(`INSERT 
-                    INTO cats(userID,catName,catBirthday,catGender,catAmountOfWater) 
-                    VALUES(?,?,?,?,?)`,cat,(err)=>{
+                    INTO cats(userID,catName,catBirthday,catGender,catColor,catEyeballColor,catIdentification,catAmountOfWater) 
+                    VALUES(?,?,?,?,?,?,?,?)`,cat,(err)=>{
                         if(err){
                             return resolve(false);
                         }

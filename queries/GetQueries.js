@@ -19,6 +19,17 @@ const getUsers = () =>{
     })
     
 }
+const getUserByEmail = (email) =>{
+    return new Promise((resolve,reject)=>{
+        database.get(`SELECT * FROM users WHERE email=?`,[email],(err,row)=>{
+            if(err){
+                return resolve(false);
+            }
+            console.log(row);
+            return resolve(row);
+        })
+    })
+}
 
 const getUser = (userID) =>{
     return new Promise((resolve,reject)=>{
@@ -164,5 +175,6 @@ module.exports = {
     getUsers,
     getUserWithCat,
     getUserCat,
-    getFeedingTimeHours
+    getFeedingTimeHours,
+    getUserByEmail
 }
