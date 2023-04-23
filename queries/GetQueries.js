@@ -25,7 +25,6 @@ const getUserByEmail = (email) =>{
             if(err){
                 return resolve(false);
             }
-            console.log(row);
             return resolve(row);
         })
     })
@@ -37,7 +36,6 @@ const getUser = (userID) =>{
             if(err){
                 throw new Error(err);
             }
-            console.log(row);
             return resolve(row);
         })
     })

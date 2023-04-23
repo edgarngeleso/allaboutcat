@@ -26,11 +26,9 @@ app.get("/",(req,res)=>{
 //Auth
 app.post("/login",multer.any(),async(req,res)=>{
     let user = await loginUser(req.body.email,req.body.password);
-    console.log(user)
     if(user){
         let hasRegistered = false;
         let usercats = await getUserWithCat(user.userID);
-        console.log(usercats);
         if(usercats.length>0){
             hasRegistered = true;
         }
@@ -40,7 +38,6 @@ app.post("/login",multer.any(),async(req,res)=>{
 });
 
 app.post("/register",multer.any(),async (req,res)=>{
-    console.log(req.body);
     if(!(await getUserByEmail(req.body.email))){
         let user = [req.body.firstName,
                     req.body.lastName,
@@ -62,7 +59,6 @@ app.post("/register",multer.any(),async (req,res)=>{
 
         
         const a = await addUser(user);
-        console.log(user)
         if(await addUser(user)){
             
             return res.json({error:false,message:"Success."});
@@ -97,8 +93,7 @@ app.post("/add-cat",multer.any(),async (req,res)=>{
         req.body.catEyeballColor,
         req.body.catIdentification,
         req.body.catAmountOfWater
-    ]
-    console.log(cat);
+    ];
     if(await addCat(cat)){
         return res.json({error:false,message:"Success."});
     }
@@ -277,7 +272,7 @@ app.post("/forgot-password",multer.any(),async(req,res)=>{
     }
     // generate and send new password to user email
     let newPassword = passwordGenerator();
-    
+
     if(sendEmail(email,user.firtsName,newPassword)){
         if(await updatePassword(user.userID,newPassword)){
             return res.json({error:false,message:`Check ${email} for your password reset.`});

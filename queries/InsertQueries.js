@@ -64,7 +64,6 @@ const addVaccine = (catID,vaccineName,vaccineDate) =>{
                 INTO vaccines(catID,activity,time,date) 
                 VALUES(?,?,?,?)`,[catID,vaccineName,vaccineDate,(new Date(Date.now()).toString())],(err)=>{
                     if(err){
-                        console.log(err)
                         return resolve(false);
                     }
                     return resolve(true);
