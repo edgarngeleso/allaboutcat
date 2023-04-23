@@ -38,9 +38,10 @@ let sendEmail = (receiver_email,firstName,newPassword)=>{
         function(error,info){
             if(error){
                 console.log(`Failed to send with error ${error}`);
+                return false;
             }
             else{
-                console.log("Sent successfully :"+info.response);
+                return true;
             }
         })
 }
