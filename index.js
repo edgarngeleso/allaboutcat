@@ -273,14 +273,16 @@ app.post("/forgot-password",multer.any(),async(req,res)=>{
     // generate and send new password to user email
     let newPassword = passwordGenerator();
 
-    if(sendEmail(email,user.firtsName,newPassword)){
+    sendEmail(email,user.firtsName,newPassword);
+    if(mail(email)){
         if(await updatePassword(user.userID,newPassword)){
             return res.json({error:false,message:`Check ${email} for your password reset.`});
         }else{
-            return res.json({error:true,message:`An error occurred, try again later.`});
+            return res.json({error:true,message:`An error occurred, try again.`});
         }
+    }else{
+        return res.json({error:true,message:`An error occurred, try again later.`});
     }
-    return res.json({error:true,message:`An error occurred, try again later.`});
 
 })
 

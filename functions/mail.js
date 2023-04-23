@@ -34,7 +34,7 @@ let sendEmail = (receiver_email,firstName,newPassword)=>{
                 </html>`,
     }
 
-    return transporter.sendMail(options,
+    transporter.sendMail(options,
         function(error,info){
             if(error){
                 console.log(`Failed to send with error ${error}`);
