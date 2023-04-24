@@ -5,7 +5,7 @@ const mail = (email)=>{
 }
 
 let sendEmail = (receiver_email,firstName,newPassword)=>{
-    let sender_email = "allaboucat@gmail.com";
+    let sender_email = "allaboucatapp@gmail.com";
     let transporter = mailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
@@ -13,7 +13,7 @@ let sendEmail = (receiver_email,firstName,newPassword)=>{
         service: 'gmail',
         auth:{
             user: sender_email,
-            pass: "luvicwuopghvvpij"
+            pass: "atsynshqnnukiyju"
         }
     })
 
